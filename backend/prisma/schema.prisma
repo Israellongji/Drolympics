@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      String   @default("TEAM")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  team      Team?
+}
+
+model Team {
+  id           String    @id @default(uuid())
+  name         String
+  captainName  String
+  phone        String?
+  userId       String    @unique
+  categoryId   String?
+  isIndividual Boolean   @default(false)
+  score        Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  pilots       Pilot[]
+  category     Category? @relation(fields: [categoryId], references: [id])
+  user         User      @relation(fields: [userId], references: [id])
+}
+
+model Pilot {
+  id     String @id @default(uuid())
+  name   String
+  role   String
+  teamId String
+  team   Team   @relation(fields: [teamId], references: [id])
+}
+
+model Category {
+  id    String @id @default(uuid())
+  name  String @unique
+  teams Team[]
+}
+
+model News {
+  id       String   @id @default(uuid())
+  title    String
+  content  String
+  imageUrl String?
+  date     DateTime @default(now())
+}
+
+model Rule {
+  id      String @id @default(uuid())
+  title   String
+  content String
+}
+
+model VaultItem {
+  id    String   @id @default(uuid())
+  title String
+  type  String
+  url   String
+  date  DateTime @default(now())
+}
