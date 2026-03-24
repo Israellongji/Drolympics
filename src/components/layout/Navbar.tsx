@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Rocket } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
       <div className="container flex-between h-full">
         {/* Logo */}
         <Link to="/" className="logo flex-center gap-sm">
-          <Rocket className="text-cyan" size={28} />
+          <img src="/drone-logo.png" alt="Drolympics" style={{ height: '36px', borderRadius: '4px' }} />
           <span className="logo-text">
             DROLYM<span className="text-cyan">PICS</span>
           </span>
