@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Database, ShieldAlert, Edit, Users, UploadCloud, Bell } from 'lucide-react';
-import { fetchTeams, createNews, updateTeamScore } from '../services/api';
+import { fetchTeams, createNews } from '../services/api';
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'teams' | 'content'>('overview');
