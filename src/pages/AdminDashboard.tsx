@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Database, ShieldAlert, Edit, Users, UploadCloud, Bell } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Database, ShieldAlert, Edit, Users, UploadCloud, Bell, LogOut } from 'lucide-react';
 import { fetchTeams, createNews } from '../services/api';
 
 const AdminDashboard: React.FC = () => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
   const [activeTab, setActiveTab] = useState<'overview' | 'teams' | 'content'>('overview');
   
   const [teams, setTeams] = useState<any[]>([]);
@@ -45,9 +52,14 @@ const AdminDashboard: React.FC = () => {
           <h1 className="text-3xl font-bold text-orange">Admin <span className="text-white">Central</span></h1>
           <p className="text-muted">Master control system for Drolympics.</p>
         </div>
-        <div className="badge border-orange px-md py-sm flex-center gap-sm">
-          <ShieldAlert size={16} className="text-orange" />
-          <span className="text-orange">Level 5 Access</span>
+        <div className="flex-center gap-md">
+          <div className="badge border-orange px-md py-sm flex-center gap-sm">
+            <ShieldAlert size={16} className="text-orange" />
+            <span className="text-orange">Level 5 Access</span>
+          </div>
+          <button onClick={handleLogout} className="btn btn-outline flex-center gap-sm">
+            <LogOut size={18} /> Logout
+          </button>
         </div>
       </div>
 

@@ -1,5 +1,4 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
@@ -15,13 +14,24 @@ import Register from './pages/Register';
 import TeamDashboard from './pages/TeamDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 
+const LayoutContent: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const location = useLocation();
+  const isDashboard = location.pathname.startsWith('/dashboard') || location.pathname.startsWith('/admin');
+
+  return (
+    <>
+      <div className="tech-bg"></div>
+      {!isDashboard && <Navbar />}
+      <main>{children}</main>
+      {!isDashboard && <Footer />}
+    </>
+  );
+};
+
 const App: React.FC = () => {
   return (
     <Router>
-      <div className="tech-bg"></div> {/* Global animated background grid */}
-      <Navbar />
-      
-      <main>
+      <LayoutContent>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -36,9 +46,7 @@ const App: React.FC = () => {
           <Route path="/dashboard" element={<TeamDashboard />} />
           <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
-      </main>
-
-      <Footer />
+      </LayoutContent>
     </Router>
   );
 };

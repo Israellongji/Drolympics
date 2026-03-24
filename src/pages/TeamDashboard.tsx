@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
-import { Users, Activity, Crosshair, Award, Plus, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Users, Activity, Crosshair, Award, Plus, Trash2, LogOut } from 'lucide-react';
 
 const TeamDashboard: React.FC = () => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
+
   const [pilots, setPilots] = useState([
     { id: 1, name: 'Alex "Maverick" Chen', role: 'Lead Pilot' },
     { id: 2, name: 'Samantha Vance', role: 'Chief Engineer' }
@@ -28,8 +36,13 @@ const TeamDashboard: React.FC = () => {
           <h1 className="text-3xl font-bold">Neon <span className="text-cyan">Flight</span> Command</h1>
           <p className="text-muted">Welcome to your team telemetry dashboard.</p>
         </div>
-        <div className="badge border-cyan px-md py-sm">
-          Status: <span className="text-cyan">Online & Cleared for Flight</span>
+        <div className="flex-center gap-md">
+          <div className="badge border-cyan px-md py-sm">
+            Status: <span className="text-cyan">Online & Cleared for Flight</span>
+          </div>
+          <button onClick={handleLogout} className="btn btn-outline flex-center gap-sm">
+            <LogOut size={18} /> Logout
+          </button>
         </div>
       </div>
 
